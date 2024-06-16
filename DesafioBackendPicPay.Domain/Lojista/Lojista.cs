@@ -1,6 +1,6 @@
 ﻿namespace DesafioBackendPicPay.Domain.Lojista
 {
-    public class Lojista : BaseUser<Guid>
+    public class Lojista : Entity<Guid>
     {
         public required string FirstName { get; set; }
         public required string LastName { get; set; }

@@ -1,5 +1,5 @@
 ﻿using DesafioBackendPicPay.Domain.Lojista;
-using DesafioBackendPicPay.Domain.User.User;
+using DesafioBackendPicPay.Domain.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace DesafioBackendPicPay.Platform.Infrastructure.Database
@@ -9,7 +9,7 @@ namespace DesafioBackendPicPay.Platform.Infrastructure.Database
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseNpgsql("Server=localhost;Database=desafiopicpay;Username=postgres;Password=root",
-                b => b.MigrationsAssembly("ServerlessMarketplace.Migrations"));
+                b => b.MigrationsAssembly("DesafioBackendPicPay.Migrations"));
 
             //optionsBuilder.LogTo(Console.WriteLine);
             optionsBuilder.EnableSensitiveDataLogging();
