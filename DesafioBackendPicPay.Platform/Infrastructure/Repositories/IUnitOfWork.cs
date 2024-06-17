@@ -7,5 +7,6 @@ namespace DesafioBackendPicPay.Platform.Infrastructure.Repositories
         IPicpayRepository picpayRepository { get; }
 
         Task CommitAsync(CancellationToken cancellationToken = default);
+        Task RollbackAsync(CancellationToken cancellationToken = default);
     }
 }

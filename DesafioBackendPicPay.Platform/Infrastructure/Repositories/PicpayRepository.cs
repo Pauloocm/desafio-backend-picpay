@@ -19,5 +19,21 @@ namespace DesafioBackendPicPay.Platform.Infrastructure.Repositories
         {
             await context.Users.AddAsync(user, cancellationToken);
         }
+
+        public async Task<Entity<Guid>?> GetById(Guid sendById, CancellationToken cancellationToken)
+        {
+            ArgumentException.ThrowIfNullOrEmpty(nameof(sendById));
+
+            Entity<Guid>? entity;
+
+            entity = await context.Lojistas.FindAsync([sendById, cancellationToken], cancellationToken: cancellationToken);
+
+            if (entity is null)
+            {
+                return await context.Users.FindAsync([sendById, cancellationToken], cancellationToken: cancellationToken);
+            }
+
+            return entity;
+        }
     }
 }

@@ -7,5 +7,6 @@ namespace DesafioBackendPicPay.Platform.Application
     {
         Task<Guid> Add(AddLojistaCommand command, CancellationToken cancellationToken = default);
         Task<Guid> AddUser(AddUserCommand command, CancellationToken cancellationToken = default);
+        Task Transfer(TransferCommand command, CancellationToken cancellationToken = default);
     }
 }

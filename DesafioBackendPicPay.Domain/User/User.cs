@@ -8,6 +8,11 @@
 
         public required string Cpf;
 
+        public User()
+        {
+            Id = Guid.NewGuid();
+        }
+
         public void SetCpf(string cpf)
         {
             IsValid(cpf);

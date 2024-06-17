@@ -12,6 +12,7 @@ namespace DesafioBackendPicPay.Platform.Infrastructure.Database.Maps
             builder.Property(l => l.Id).ValueGeneratedNever();
             builder.Property(l => l.FirstName).HasMaxLength(50).IsRequired();
             builder.Property(l => l.LastName).HasMaxLength(100).IsRequired();
+            builder.Property(l => l.Balance);
 
             builder.HasIndex(l => l.Cpf).IsUnique();
             builder.HasIndex(l => l.Email).IsUnique();

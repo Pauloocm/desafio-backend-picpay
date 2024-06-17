@@ -14,16 +14,16 @@ namespace DesafioBackendPicPay.ViewModels
         [FromBody]
         public Guid ReceivedById { get; set; }
 
-        [Required]
+        //[Required]
         [FromBody]
         public decimal Value { get; set; }
 
-        internal TransferCommand ToCommand()
+        internal TransferCommand ToCommand(Guid sendById, Guid receivedById)
         {
             var command = new TransferCommand()
             {
-                SendById = SendById,
-                ReceivedById = ReceivedById,
+                SendById = sendById,
+                ReceivedById = receivedById,
                 Value = Value
             };
 
