@@ -8,6 +8,11 @@
 
         public required string Cpf { get; set; }
 
+        public Lojista()
+        {
+            Id = Guid.NewGuid();
+        }
+
         public void SetCpf(string cpf)
         {
             IsValid(cpf);

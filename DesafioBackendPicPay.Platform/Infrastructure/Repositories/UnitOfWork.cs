@@ -1,11 +1,13 @@
 ﻿using DesafioBackendPicPay.Domain;
 using DesafioBackendPicPay.Platform.Infrastructure.Database;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace DesafioBackendPicPay.Platform.Infrastructure.Repositories
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
         private readonly DataContext context;
+        private IDbContextTransaction transaction;
 
         public IPicpayRepository picpayRepository { get; private set; }
 
@@ -13,6 +15,7 @@ namespace DesafioBackendPicPay.Platform.Infrastructure.Repositories
         {
             context = dataContext;
             picpayRepository = new PicpayRepository(context);
+            transaction = context.Database.BeginTransaction();
         }
 
         public async Task CommitAsync(CancellationToken cancellationToken = default)
@@ -20,15 +23,28 @@ namespace DesafioBackendPicPay.Platform.Infrastructure.Repositories
             try
             {
                 await context.SaveChangesAsync(cancellationToken);
+                await transaction.CommitAsync(cancellationToken);
             }
             catch (Exception)
             {
-                await context.Database.RollbackTransactionAsync(cancellationToken);
+                await RollbackAsync(cancellationToken);
+                throw;
             }
 
 
         }
+        public async Task RollbackAsync(CancellationToken cancellationToken = default)
+        {
+            await transaction.RollbackAsync(cancellationToken);
+            transaction.Dispose();
+            transaction = await context.Database.BeginTransactionAsync(cancellationToken);
+        }
 
-        public void Dispose() => context.Dispose();
+        public void Dispose()
+        {
+            transaction?.Dispose();
+            context?.Dispose();
+        }
+
     }
 }
