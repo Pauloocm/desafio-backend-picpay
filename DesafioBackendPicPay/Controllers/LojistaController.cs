@@ -10,6 +10,7 @@ namespace DesafioBackendPicPay.Controllers
     {
         private readonly IDesafioPicpayAppService picpayAppService = appService ?? throw new ArgumentNullException(nameof(appService));
 
+        [HttpPost]
         public async Task<IActionResult> Add([FromBody] AddLojistaCommand command, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(command, nameof(command));

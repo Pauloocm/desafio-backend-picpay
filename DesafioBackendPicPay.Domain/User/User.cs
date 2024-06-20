@@ -1,12 +1,17 @@
-﻿namespace DesafioBackendPicPay.Domain.User.User
+﻿namespace DesafioBackendPicPay.Domain.User
 {
-    public class User : BaseUser<Guid>
+    public class User : Entity<Guid>
     {
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
         public required string Email { get; set; }
 
-        private string? Cpf;
+        public required string Cpf;
+
+        public User()
+        {
+            Id = Guid.NewGuid();
+        }
 
         public void SetCpf(string cpf)
         {
