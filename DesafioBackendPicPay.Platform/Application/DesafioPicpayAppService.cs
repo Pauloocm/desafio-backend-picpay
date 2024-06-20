@@ -4,20 +4,22 @@ using DesafioBackendPicPay.Domain.Lojista;
 using DesafioBackendPicPay.Domain.User;
 using DesafioBackendPicPay.Platform.Application.Lojista.Commands;
 using DesafioBackendPicPay.Platform.Application.User.Commands;
+using DesafioBackendPicPay.Platform.Infrastructure.Authorization;
 using DesafioBackendPicPay.Platform.Infrastructure.Repositories;
 
 namespace DesafioBackendPicPay.Platform.Application
 {
-    public class DesafioPicpayAppService(IUnitOfWork unitOfWorkContext) : IDesafioPicpayAppService
+    public class DesafioPicpayAppService(IUnitOfWork unitOfWorkContext, IAuthorizationService authorization) : IDesafioPicpayAppService
     {
         private readonly IUnitOfWork unitOfWork = unitOfWorkContext;
+        private readonly IAuthorizationService authorizationService = authorization;
 
         public async Task<Guid> Add(AddLojistaCommand command, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(command, nameof(command));
 
             var lojista = LojistaFactory.Create(command.FirstName, command.LastName, command.Email, command.Cpf);
-            lojista.Id = Guid.Parse("9b289419-3ae1-474e-a212-34d3d9d74376");
+
             await unitOfWork.picpayRepository.Add(lojista, cancellationToken);
             await unitOfWork.CommitAsync(cancellationToken);
 
@@ -50,6 +52,8 @@ namespace DesafioBackendPicPay.Platform.Application
 
             ValidateTransfer(sendedBy, receivedBy, command.Value);
 
+            if (!await authorizationService.IsAuthorized()) throw new UnavelableOperationException();
+
             await unitOfWork.CommitAsync(cancellationToken);
         }
 
@@ -59,7 +63,7 @@ namespace DesafioBackendPicPay.Platform.Application
             ArgumentNullException.ThrowIfNull(receivedBy, nameof(receivedBy));
             if (value <= 0) throw new ArgumentNullException(nameof(value));
 
-            if (sendedBy.Balance <= value) throw new InsufficientFundsException();
+            if (sendedBy.Balance < value) throw new InsufficientFundsException();
 
             receivedBy.Balance += value;
 
