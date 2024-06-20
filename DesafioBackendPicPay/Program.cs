@@ -1,6 +1,18 @@
+using DesafioBackendPicPay.Platform.Application;
+using DesafioBackendPicPay.Platform.Infrastructure.Authorization;
+using DesafioBackendPicPay.Platform.Infrastructure.Database;
+using DesafioBackendPicPay.Platform.Infrastructure.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddDbContext<DataContext>();
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddTransient<IDesafioPicpayAppService, DesafioPicpayAppService>();
+builder.Services.AddTransient<IAuthorizationService, AuthorizationService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
