@@ -9,12 +9,12 @@ namespace DesafioBackendPicPay.Platform.Infrastructure.Repositories
         private readonly DataContext context;
         private IDbContextTransaction transaction;
 
-        public IPicpayRepository picpayRepository { get; private set; }
+        public IPicpayRepository PicpayRepository { get; private set; }
 
         public UnitOfWork(DataContext dataContext)
         {
             context = dataContext;
-            picpayRepository = new PicpayRepository(context);
+            PicpayRepository = new PicpayRepository(context);
             transaction = context.Database.BeginTransaction();
         }
 
@@ -45,6 +45,5 @@ namespace DesafioBackendPicPay.Platform.Infrastructure.Repositories
             transaction?.Dispose();
             context?.Dispose();
         }
-
     }
 }

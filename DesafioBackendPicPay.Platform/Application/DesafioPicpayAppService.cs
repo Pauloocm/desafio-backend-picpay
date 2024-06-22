@@ -18,9 +18,9 @@ namespace DesafioBackendPicPay.Platform.Application
         {
             ArgumentNullException.ThrowIfNull(command, nameof(command));
 
-            var lojista = LojistaFactory.Create(command.FirstName, command.LastName, command.Email, command.Cpf);
+            var lojista = LojistaFactory.Create(command.FirstName, command.LastName, command.Email, command.Cnpj);
 
-            await unitOfWork.picpayRepository.Add(lojista, cancellationToken);
+            await unitOfWork.PicpayRepository.Add(lojista, cancellationToken);
             await unitOfWork.CommitAsync(cancellationToken);
 
             return lojista.Id;
@@ -32,7 +32,7 @@ namespace DesafioBackendPicPay.Platform.Application
 
             var user = UserFactory.Create(command.FirstName, command.LastName, command.Email, command.Cpf);
 
-            await unitOfWork.picpayRepository.AddUser(user, cancellationToken);
+            await unitOfWork.PicpayRepository.AddUser(user, cancellationToken);
             await unitOfWork.CommitAsync(cancellationToken);
 
             return user.Id;
@@ -42,12 +42,12 @@ namespace DesafioBackendPicPay.Platform.Application
         {
             ArgumentNullException.ThrowIfNull(command, nameof(command));
 
-            var sendedBy = await unitOfWork.picpayRepository.GetById(command.SendById, cancellationToken) ??
+            var sendedBy = await unitOfWork.PicpayRepository.GetById(command.SendById, cancellationToken) ??
                 throw new UserNotFoundException(command.SendById);
 
             IsUserValid(sendedBy);
 
-            var receivedBy = await unitOfWork.picpayRepository.GetById(command.ReceivedById, cancellationToken) ??
+            var receivedBy = await unitOfWork.PicpayRepository.GetById(command.ReceivedById, cancellationToken) ??
                 throw new UserNotFoundException(command.ReceivedById);
 
             ValidateTransfer(sendedBy, receivedBy, command.Value);
