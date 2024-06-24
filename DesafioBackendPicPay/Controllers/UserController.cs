@@ -1,5 +1,4 @@
 ﻿using DesafioBackendPicPay.Platform.Application;
-using DesafioBackendPicPay.Platform.Application.User.Commands;
 using DesafioBackendPicPay.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,11 +11,11 @@ namespace DesafioBackendPicPay.Controllers
         private readonly IDesafioPicpayAppService picpayAppService = appService ?? throw new ArgumentNullException(nameof(appService));
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] AddUserCommand command, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> Add([FromBody] AddUserViewModel viewModel, CancellationToken cancellationToken = default)
         {
-            ArgumentNullException.ThrowIfNull(command, nameof(command));
+            ArgumentNullException.ThrowIfNull(viewModel, nameof(viewModel));
 
-            var id = await picpayAppService.AddUser(command, cancellationToken);
+            var id = await picpayAppService.AddUser(viewModel.ToCommand(), cancellationToken);
 
             return Ok(id);
         }
