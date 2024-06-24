@@ -1,4 +1,5 @@
 ﻿using DesafioBackendPicPay.Platform.Application;
+using DesafioBackendPicPay.Platform.Infrastructure.EmailService;
 using DesafioBackendPicPay.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +15,8 @@ namespace DesafioBackendPicPay.Controllers
         public async Task<IActionResult> Add([FromBody] AddUserViewModel viewModel, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(viewModel, nameof(viewModel));
+
+            await EmailService.SendEmailAsync("paulooo.cm@gmail.com", ["paulooo.cm@hotmail.com"], textContent: "Apenas um teste!", subject: null);
 
             var id = await picpayAppService.AddUser(viewModel.ToCommand(), cancellationToken);
 

@@ -5,6 +5,7 @@ using DesafioBackendPicPay.Domain.User;
 using DesafioBackendPicPay.Platform.Application.Lojista.Commands;
 using DesafioBackendPicPay.Platform.Application.User.Commands;
 using DesafioBackendPicPay.Platform.Infrastructure.Authorization;
+using DesafioBackendPicPay.Platform.Infrastructure.EmailService;
 using DesafioBackendPicPay.Platform.Infrastructure.Repositories;
 
 namespace DesafioBackendPicPay.Platform.Application
@@ -30,10 +31,12 @@ namespace DesafioBackendPicPay.Platform.Application
         {
             ArgumentNullException.ThrowIfNull(command, nameof(command));
 
+            
             var user = UserFactory.Create(command.FirstName, command.LastName, command.Email, command.Cpf);
 
             await unitOfWork.PicpayRepository.AddUser(user, cancellationToken);
             await unitOfWork.CommitAsync(cancellationToken);
+
 
             return user.Id;
         }
