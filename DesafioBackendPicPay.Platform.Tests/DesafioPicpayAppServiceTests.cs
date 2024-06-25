@@ -36,7 +36,7 @@ namespace DesafioBackendPicPay.Platform.Tests
         }
 
         [Test]
-        public async Task AddLojista_Should_NullException_If_Command_Is_Invalid()
+        public async Task AddLojista_Should_Throw_NullException_If_Command_Is_Invalid()
         {
             Assert.ThrowsAsync<ArgumentNullException>(async () => await picpayAppService.Add(null!, CancellationToken.None));
 
@@ -64,7 +64,7 @@ namespace DesafioBackendPicPay.Platform.Tests
         }
 
         [Test]
-        public async Task AddUser_Should_NullException_If_Command_Is_Invalid()
+        public async Task AddUser_Should_Throw_NullException_If_Command_Is_Invalid()
         {
             Assert.ThrowsAsync<ArgumentNullException>(async () => await picpayAppService.AddUser(null!, CancellationToken.None));
 
@@ -92,7 +92,7 @@ namespace DesafioBackendPicPay.Platform.Tests
         }
 
         [Test]
-        public async Task Transfer_Should_NullException_If_Command_Is_Invalid()
+        public async Task Transfer_Should_Throw_NullException_If_Command_Is_Invalid()
         {
             Assert.ThrowsAsync<ArgumentNullException>(async () => await picpayAppService.Transfer(null!, CancellationToken.None));
 
@@ -101,7 +101,7 @@ namespace DesafioBackendPicPay.Platform.Tests
         }
 
         [Test]
-        public async Task Transfer_Should_UserNotFoundException_If_GetById_Return_Null()
+        public async Task Transfer_Should_Throw_UserNotFoundException_If_GetById_Return_Null()
         {
             var command = new TransferCommand()
             {
@@ -117,7 +117,7 @@ namespace DesafioBackendPicPay.Platform.Tests
         }
 
         [Test]
-        public async Task Transfer_Should_InvalidOperationException_If_GetById_Return_A_Lojista_Entity()
+        public async Task Transfer_Should_Throw_InvalidOperationException_If_GetById_Return_A_Lojista_Entity()
         {
             var command = new TransferCommand()
             {
@@ -143,7 +143,7 @@ namespace DesafioBackendPicPay.Platform.Tests
         }
 
         [Test]
-        public async Task Transfer_Should_InvalidOperationException_If_GetById_Return_Null()
+        public async Task Transfer_Should_Throw_InvalidOperationException_If_GetById_Return_Null()
         {
             var command = new TransferCommand()
             {
@@ -171,7 +171,7 @@ namespace DesafioBackendPicPay.Platform.Tests
         }
 
         [Test]
-        public async Task Transfer_Should_InsufficientFundsException_If_Send_Entity_Ballance_Is_Less_Than_You_Transfer_Value()
+        public async Task Transfer_Should_Throw_InsufficientFundsException_If_Send_Entity_Ballance_Is_Less_Than_You_Transfer_Value()
         {
             var command = new TransferCommand()
             {
@@ -209,7 +209,7 @@ namespace DesafioBackendPicPay.Platform.Tests
         }
 
         [Test]
-        public async Task Transfer_Should_UnavelableOperationException_If_IsAuthorized_Method_Returns_False()
+        public async Task Transfer_Should_Throw_UnavelableOperationException_If_IsAuthorized_Method_Returns_False()
         {
             var command = new TransferCommand()
             {
