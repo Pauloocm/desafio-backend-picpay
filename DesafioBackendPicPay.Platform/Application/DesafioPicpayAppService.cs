@@ -47,8 +47,8 @@ namespace DesafioBackendPicPay.Platform.Application
 
             IsUserValid(sendedBy);
 
-            var receivedBy = await unitOfWork.PicpayRepository.GetById(command.ReceivedById, cancellationToken) ??
-                throw new UserNotFoundException(command.ReceivedById);
+            var receivedBy = await unitOfWork.PicpayRepository.GetReceivedById(command.ReceivedById, cancellationToken) ??
+                throw new ReceivedUserNotFoundException(command.ReceivedById);
 
             ValidateTransfer(sendedBy, receivedBy, command.Value);
 
