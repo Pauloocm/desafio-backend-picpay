@@ -143,7 +143,7 @@ namespace DesafioBackendPicPay.Platform.Tests
         }
 
         [Test]
-        public async Task Transfer_Should_Throw_InvalidOperationException_If_GetById_Return_Null()
+        public async Task Transfer_Should_Throw_ReceivedUserNotFoundException_If_GetReceivedById_Return_Null()
         {
             var command = new TransferCommand()
             {
