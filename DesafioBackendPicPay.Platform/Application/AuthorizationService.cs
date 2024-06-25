@@ -1,6 +1,4 @@
 ﻿using DesafioBackendPicPay.Platform.Infrastructure.Authorization;
-using System.Net.Http.Json;
-using System.Text.Json;
 
 namespace DesafioBackendPicPay.Platform.Application
 {
