@@ -12,12 +12,12 @@ namespace DesafioBackendPicPay.Platform.Infrastructure.Repositories
 
         public async Task Add(Lojista lojista, CancellationToken cancellationToken = default)
         {
-            await context.Lojistas.AddAsync(lojista, cancellationToken);
+            await dataContext.Lojistas.AddAsync(lojista, cancellationToken);
         }
 
         public async Task AddUser(User user, CancellationToken cancellationToken)
         {
-            await context.Users.AddAsync(user, cancellationToken);
+            await dataContext.Users.AddAsync(user, cancellationToken);
         }
 
         public async Task<Entity<Guid>?> GetById(Guid sendById, CancellationToken cancellationToken)
@@ -26,11 +26,27 @@ namespace DesafioBackendPicPay.Platform.Infrastructure.Repositories
 
             Entity<Guid>? entity;
 
-            entity = await context.Lojistas.FindAsync([sendById, cancellationToken], cancellationToken: cancellationToken);
+            entity = await dataContext.Lojistas.FindAsync([sendById, cancellationToken], cancellationToken: cancellationToken);
 
             if (entity is null)
             {
-                return await context.Users.FindAsync([sendById, cancellationToken], cancellationToken: cancellationToken);
+                return await dataContext.Users.FindAsync([sendById, cancellationToken], cancellationToken: cancellationToken);
+            }
+
+            return entity;
+        }
+
+        public async Task<Entity<Guid>?> GetReceivedById(Guid Id, CancellationToken cancellationToken = default)
+        {
+            ArgumentException.ThrowIfNullOrEmpty(nameof(Id));
+
+            Entity<Guid>? entity;
+
+            entity = await dataContext.Lojistas.FindAsync([Id, cancellationToken], cancellationToken: cancellationToken);
+
+            if (entity is null)
+            {
+                return await dataContext.Users.FindAsync([Id, cancellationToken], cancellationToken: cancellationToken);
             }
 
             return entity;
