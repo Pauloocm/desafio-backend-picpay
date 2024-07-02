@@ -15,7 +15,7 @@ namespace DesafioBackendPicPay.Domain.Lojista
                 FirstName = firstName,
                 LastName = lastName,
                 Email = email,
-                Cpf = cnpj
+                Cnpj = cnpj
             };
 
             return lojista;

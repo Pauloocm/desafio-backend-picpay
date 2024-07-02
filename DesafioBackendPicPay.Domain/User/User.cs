@@ -1,4 +1,6 @@
-﻿namespace DesafioBackendPicPay.Domain.User
+﻿using DesafioBackendPicPay.Domain.Exceptions;
+
+namespace DesafioBackendPicPay.Domain.User
 {
     public class User : Entity<Guid>
     {
@@ -25,6 +27,13 @@
             // Implement CPF validation logic here
 
             Cpf = cpf;
+        }
+
+        public void Debit(decimal value)
+        {
+            if (Balance < value) throw new InsufficientFundsException();
+
+            Balance -= value;
         }
     }
 }

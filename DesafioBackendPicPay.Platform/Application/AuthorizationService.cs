@@ -15,12 +15,11 @@ namespace DesafioBackendPicPay.Platform.Application
 
         public async Task<bool> IsAuthorized()
         {
-
             var result = await httpClient.GetAsync(Address);
 
             var res = await result.Content.ReadAsStringAsync();
 
-            if(res.Contains("fail") || res.Contains("false"))
+            if (res.Contains("fail") || res.Contains("false"))
                 return false;
 
             return true;

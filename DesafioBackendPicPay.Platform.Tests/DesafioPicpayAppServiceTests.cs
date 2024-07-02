@@ -60,7 +60,7 @@ namespace DesafioBackendPicPay.Platform.Tests
             Assert.That(lojistaId, Is.Not.Empty);
 
             await unitOfWork.Received(1).CommitAsync();
-            await unitOfWork.Received(1).PicpayRepository.Add(Arg.Is<Lojista>(l => l.Id == lojistaId), Arg.Any<CancellationToken>());
+            await unitOfWork.Received(2).PicpayRepository.Add(Arg.Is<Lojista>(l => l.Id == lojistaId), Arg.Any<CancellationToken>());
         }
 
         [Test]
@@ -88,7 +88,7 @@ namespace DesafioBackendPicPay.Platform.Tests
             Assert.That(userId, Is.Not.Empty);
 
             await unitOfWork.Received(1).CommitAsync();
-            await unitOfWork.Received(1).PicpayRepository.AddUser(Arg.Is<User>(u => u.Id == userId), Arg.Any<CancellationToken>());
+            await unitOfWork.Received(2).PicpayRepository.AddUser(Arg.Is<User>(u => u.Id == userId), Arg.Any<CancellationToken>());
         }
 
         [Test]
@@ -128,7 +128,7 @@ namespace DesafioBackendPicPay.Platform.Tests
 
             var lojista = new Lojista()
             {
-                Cpf = "XX.XXX.XXX/0001-ZZ",
+                Cnpj = "XX.XXX.XXX/0001-ZZ",
                 Email = "email@gmail.com",
                 FirstName = "fistName",
                 LastName = "lastName"
@@ -157,9 +157,10 @@ namespace DesafioBackendPicPay.Platform.Tests
                 Cpf = "xxx.xxx.xxx-xx",
                 Email = "email@gmail.com",
                 FirstName = "fistName",
-                LastName = "lastName",
-                Balance = 300
+                LastName = "lastName"
             };
+
+            user.Deposit(300);
 
             unitOfWork.PicpayRepository.GetById(Arg.Any<Guid>(), Arg.Any<CancellationToken>()).Returns(user);
 
@@ -173,33 +174,34 @@ namespace DesafioBackendPicPay.Platform.Tests
         [Test]
         public async Task Transfer_Should_Throw_InsufficientFundsException_If_Send_Entity_Ballance_Is_Less_Than_You_Transfer_Value()
         {
-            var command = new TransferCommand()
-            {
-                SendById = Guid.NewGuid(),
-                ReceivedById = Guid.NewGuid(),
-                Value = 50
-            };
-
             var user = new User()
             {
                 Cpf = "xxx.xxx.xxx-xx",
                 Email = "email@gmail.com",
                 FirstName = "fistName",
-                LastName = "lastName",
-                Balance = 49
+                LastName = "lastName"
             };
+
+            user.Deposit(49);
 
             var user2 = new User()
             {
                 Cpf = "xxx.xxx.xxx-xx",
                 Email = "email@gmail.com",
                 FirstName = "fistName",
-                LastName = "lastName",
-                Balance = 0
+                LastName = "lastName"
             };
+
 
             unitOfWork.PicpayRepository.GetById(Arg.Any<Guid>(), Arg.Any<CancellationToken>()).Returns(user);
             unitOfWork.PicpayRepository.GetReceivedById(Arg.Any<Guid>(), Arg.Any<CancellationToken>()).Returns(user2);
+
+            var command = new TransferCommand()
+            {
+                SendById = Guid.NewGuid(),
+                ReceivedById = Guid.NewGuid(),
+                Value = 50
+            };
 
             Assert.ThrowsAsync<InsufficientFundsException>(async () => await picpayAppService.Transfer(command, CancellationToken.None));
 
@@ -211,29 +213,29 @@ namespace DesafioBackendPicPay.Platform.Tests
         [Test]
         public async Task Transfer_Should_Throw_UnavelableOperationException_If_IsAuthorized_Method_Returns_False()
         {
-            var command = new TransferCommand()
-            {
-                SendById = Guid.NewGuid(),
-                ReceivedById = Guid.NewGuid(),
-                Value = 50
-            };
-
             var user = new User()
             {
                 Cpf = "xxx.xxx.xxx-xx",
                 Email = "email@gmail.com",
                 FirstName = "fistName",
-                LastName = "lastName",
-                Balance = 100
+                LastName = "lastName"
             };
+
+            user.Deposit(100);
 
             var user2 = new User()
             {
                 Cpf = "xxx.xxx.xxx-xx",
                 Email = "email@gmail.com",
                 FirstName = "fistName",
-                LastName = "lastName",
-                Balance = 0
+                LastName = "lastName"
+            };
+
+            var command = new TransferCommand()
+            {
+                SendById = Guid.NewGuid(),
+                ReceivedById = Guid.NewGuid(),
+                Value = 50
             };
 
             unitOfWork.PicpayRepository.GetById(Arg.Any<Guid>(), Arg.Any<CancellationToken>()).Returns(user);
@@ -251,29 +253,29 @@ namespace DesafioBackendPicPay.Platform.Tests
         [Test]
         public async Task Transfer()
         {
-            var command = new TransferCommand()
-            {
-                SendById = Guid.NewGuid(),
-                ReceivedById = Guid.NewGuid(),
-                Value = 50
-            };
-
             var user = new User()
             {
                 Cpf = "xxx.xxx.xxx-xx",
                 Email = "email@gmail.com",
                 FirstName = "fistName",
-                LastName = "lastName",
-                Balance = 60
+                LastName = "lastName"
             };
+
+            user.Deposit(60);
 
             var user2 = new User()
             {
                 Cpf = "xxx.xxx.xxx-xx",
                 Email = "email@gmail.com",
                 FirstName = "fistName",
-                LastName = "lastName",
-                Balance = 0
+                LastName = "lastName"
+            };
+
+            var command = new TransferCommand()
+            {
+                SendById = Guid.NewGuid(),
+                ReceivedById = Guid.NewGuid(),
+                Value = 50
             };
 
             unitOfWork.PicpayRepository.GetById(Arg.Any<Guid>(), Arg.Any<CancellationToken>()).Returns(user);
@@ -282,9 +284,11 @@ namespace DesafioBackendPicPay.Platform.Tests
 
             await picpayAppService.Transfer(command, CancellationToken.None);
 
-
-            Assert.That(user.Balance, Is.EqualTo(10));
-            Assert.That(user2.Balance, Is.EqualTo(50));
+            Assert.Multiple(() =>
+            {
+                Assert.That(user.Balance, Is.EqualTo(10));
+                Assert.That(user2.Balance, Is.EqualTo(50));
+            });
 
             await unitOfWork.Received(1).CommitAsync();
             await unitOfWork.PicpayRepository.Received(1).GetById(Arg.Is<Guid>(u => u.Equals(command.SendById)), Arg.Any<CancellationToken>());
