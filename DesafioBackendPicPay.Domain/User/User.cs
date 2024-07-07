@@ -31,6 +31,8 @@ namespace DesafioBackendPicPay.Domain.User
 
         public void Debit(decimal value)
         {
+            if (value <= 0) throw new InvalidDebitException(value);
+
             if (Balance < value) throw new InsufficientFundsException();
 
             Balance -= value;

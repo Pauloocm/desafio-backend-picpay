@@ -14,7 +14,6 @@ namespace DesafioBackendPicPay.ViewModels
         [FromBody]
         public Guid ReceivedById { get; set; }
 
-        //[Required]
         [FromBody]
         public decimal Value { get; set; }
 

@@ -69,7 +69,6 @@ namespace DesafioBackendPicPay.Platform.Application
         {
             ArgumentNullException.ThrowIfNull(sendedBy, nameof(sendedBy));
             ArgumentNullException.ThrowIfNull(receivedBy, nameof(receivedBy));
-            if (value <= 0) throw new ArgumentNullException(nameof(value));
 
             sendedBy.Debit(value);
 
