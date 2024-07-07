@@ -6,25 +6,25 @@
         public required string LastName { get; set; }
         public required string Email { get; set; }
 
-        public required string Cpf { get; set; }
+        public required string Cnpj { get; set; }
 
         public Lojista()
         {
             Id = Guid.NewGuid();
         }
 
-        public void SetCpf(string cpf)
+        public void SetCnpj(string cnpj)
         {
-            IsValid(cpf);
+            IsValid(cnpj);
         }
 
-        private void IsValid(string cpf)
+        private void IsValid(string cnpj)
         {
-            ArgumentNullException.ThrowIfNull(nameof(cpf));
+            ArgumentNullException.ThrowIfNull(nameof(cnpj));
 
-            // Implement CPF validation logic here
+            //TODO Implement CNPJ validation logic here
 
-            Cpf = cpf;
+            Cnpj = cnpj;
         }
     }
 }

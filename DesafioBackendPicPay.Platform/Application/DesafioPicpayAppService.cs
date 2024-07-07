@@ -18,7 +18,11 @@ namespace DesafioBackendPicPay.Platform.Application
         {
             ArgumentNullException.ThrowIfNull(command, nameof(command));
 
-            var lojista = LojistaFactory.Create(command.FirstName, command.LastName, command.Email, command.Cnpj);
+            var lojista = await unitOfWork.PicpayRepository.GetLojistaBy(command.Email, cancellationToken);
+
+            if (lojista is not null) throw new LojistaAlreadyExistException();
+
+            lojista = LojistaFactory.Create(command.FirstName, command.LastName, command.Email, command.Cnpj);
 
             await unitOfWork.PicpayRepository.Add(lojista, cancellationToken);
             await unitOfWork.CommitAsync(cancellationToken);
@@ -30,7 +34,11 @@ namespace DesafioBackendPicPay.Platform.Application
         {
             ArgumentNullException.ThrowIfNull(command, nameof(command));
 
-            var user = UserFactory.Create(command.FirstName, command.LastName, command.Email, command.Cpf);
+            var user = await unitOfWork.PicpayRepository.GetUserBy(command.Email, cancellationToken);
+
+            if (user is not null) throw new UserAlreadyExistException();
+
+            user = UserFactory.Create(command.FirstName, command.LastName, command.Email, command.Cpf);
 
             await unitOfWork.PicpayRepository.AddUser(user, cancellationToken);
             await unitOfWork.CommitAsync(cancellationToken);
@@ -50,24 +58,21 @@ namespace DesafioBackendPicPay.Platform.Application
             var receivedBy = await unitOfWork.PicpayRepository.GetReceivedById(command.ReceivedById, cancellationToken) ??
                 throw new ReceivedUserNotFoundException(command.ReceivedById);
 
-            ValidateTransfer(sendedBy, receivedBy, command.Value);
+            ValidateTransfer((Domain.User.User)sendedBy, receivedBy, command.Value);
 
             if (!await authorizationService.IsAuthorized()) throw new UnavelableOperationException();
 
             await unitOfWork.CommitAsync(cancellationToken);
         }
 
-        private void ValidateTransfer(Entity<Guid> sendedBy, Entity<Guid>? receivedBy, decimal value)
+        private void ValidateTransfer(Domain.User.User sendedBy, Entity<Guid>? receivedBy, decimal value)
         {
             ArgumentNullException.ThrowIfNull(sendedBy, nameof(sendedBy));
             ArgumentNullException.ThrowIfNull(receivedBy, nameof(receivedBy));
-            if (value <= 0) throw new ArgumentNullException(nameof(value));
 
-            if (sendedBy.Balance < value) throw new InsufficientFundsException();
+            sendedBy.Debit(value);
 
-            receivedBy.Balance += value;
-
-            sendedBy.Balance -= value;
+            receivedBy.Deposit(value);
         }
 
         private void IsUserValid(Entity<Guid> entity)
