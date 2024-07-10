@@ -31,6 +31,7 @@ namespace DesafioBackendPicPay.Platform.Infrastructure.Repositories
                 throw;
             }
         }
+
         public async Task RollbackAsync(CancellationToken cancellationToken = default)
         {
             await transaction.RollbackAsync(cancellationToken);
