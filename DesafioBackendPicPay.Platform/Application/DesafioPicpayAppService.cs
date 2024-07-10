@@ -1,7 +1,6 @@
 ﻿using DesafioBackendPicPay.Domain;
 using DesafioBackendPicPay.Domain.Exceptions;
 using DesafioBackendPicPay.Domain.Lojista;
-using DesafioBackendPicPay.Domain.Lojista.Exceptions;
 using DesafioBackendPicPay.Domain.User;
 using DesafioBackendPicPay.Platform.Application.Lojista.Commands;
 using DesafioBackendPicPay.Platform.Application.User.Commands;
