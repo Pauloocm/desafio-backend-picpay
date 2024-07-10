@@ -1,6 +1,7 @@
 ﻿using DesafioBackendPicPay.Domain;
 using DesafioBackendPicPay.Domain.Exceptions;
 using DesafioBackendPicPay.Domain.Lojista;
+using DesafioBackendPicPay.Domain.Lojista.Exceptions;
 using DesafioBackendPicPay.Domain.User;
 using DesafioBackendPicPay.Platform.Application.Lojista.Commands;
 using DesafioBackendPicPay.Platform.Application.User.Commands;
@@ -77,7 +78,7 @@ namespace DesafioBackendPicPay.Platform.Application
 
         private void IsUserValid(Entity<Guid> entity)
         {
-            if (entity.GetType().Name.Equals("Lojista")) throw new InvalidOperationException();
+            if (entity.GetType().Name.Equals("Lojista")) throw new Domain.Lojista.Exceptions.InvalidOperationException();
         }
     }
 }
