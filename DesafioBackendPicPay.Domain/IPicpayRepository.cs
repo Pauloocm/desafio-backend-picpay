@@ -1,6 +1,4 @@
-﻿using DesafioBackendPicPay.Domain.Lojista;
-
-namespace DesafioBackendPicPay.Domain
+﻿namespace DesafioBackendPicPay.Domain
 {
     public interface IPicpayRepository
     {

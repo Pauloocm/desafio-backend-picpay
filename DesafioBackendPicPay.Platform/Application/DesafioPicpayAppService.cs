@@ -77,7 +77,7 @@ namespace DesafioBackendPicPay.Platform.Application
 
         private void IsUserValid(Entity<Guid> entity)
         {
-            if (entity.GetType().Name.Equals("Lojista")) throw new InvalidOperationException();
+            if (entity.GetType().Name.Equals("Lojista")) throw new Domain.Lojista.Exceptions.InvalidOperationException();
         }
     }
 }

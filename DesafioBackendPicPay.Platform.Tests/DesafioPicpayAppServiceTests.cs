@@ -136,7 +136,7 @@ namespace DesafioBackendPicPay.Platform.Tests
 
             unitOfWork.PicpayRepository.GetById(Arg.Any<Guid>(), Arg.Any<CancellationToken>()).Returns(lojista);
 
-            Assert.ThrowsAsync<InvalidOperationException>(async () => await picpayAppService.Transfer(command, CancellationToken.None));
+            Assert.ThrowsAsync<Domain.Lojista.Exceptions.InvalidOperationException>(async () => await picpayAppService.Transfer(command, CancellationToken.None));
 
             await unitOfWork.DidNotReceive().CommitAsync();
             await unitOfWork.Received().PicpayRepository.GetById(Arg.Is<Guid>(u => u.Equals(lojista.Id)), Arg.Any<CancellationToken>());
