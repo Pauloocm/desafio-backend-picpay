@@ -9,9 +9,9 @@ namespace DesafioBackendPicPay.Platform.Infrastructure.Database
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Server=localhost;Database=desafiopicpay;Username=postgres;Password=root;Include Error Detail=True");
+            //TODO add db address
+            //optionsBuilder.UseNpgsql("Server=Include Error Detail=True");
 
-            //optionsBuilder.LogTo(Console.WriteLine);
             optionsBuilder.EnableSensitiveDataLogging();
             optionsBuilder.EnableDetailedErrors();
         }
