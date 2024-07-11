@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DesafioBackendPicPay.Platform\DesafioBackendPicPay.Platform.csproj" />
-    <ProjectReference Include="..\Picpay.Migrations\DesafioBackendPicPay.Migrations.csproj" />
   </ItemGroup>
 
 </Project>
