@@ -15,11 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioBackendPicPay.Domain
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioBackendPicPay.Platform", "DesafioBackendPicPay.Platform\DesafioBackendPicPay.Platform.csproj", "{DB87851E-44B6-48A1-8615-BA7242AA37AF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Migrations", "Migrations", "{6758D40A-9CE3-4798-ACB4-7C8BBE298ABB}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioBackendPicPay.Migrations", "Picpay.Migrations\DesafioBackendPicPay.Migrations.csproj", "{4CE65772-F59E-412C-A4ED-8C06CA7A5A45}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioBackendPicPay.Platform.Tests", "DesafioBackendPicPay.Platform.Tests\DesafioBackendPicPay.Platform.Tests.csproj", "{D772720F-779D-4F7B-AD99-2E583CD94F8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioBackendPicPay.Platform.Tests", "DesafioBackendPicPay.Platform.Tests\DesafioBackendPicPay.Platform.Tests.csproj", "{D772720F-779D-4F7B-AD99-2E583CD94F8B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,10 +35,6 @@ Global
 		{DB87851E-44B6-48A1-8615-BA7242AA37AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB87851E-44B6-48A1-8615-BA7242AA37AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB87851E-44B6-48A1-8615-BA7242AA37AF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4CE65772-F59E-412C-A4ED-8C06CA7A5A45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4CE65772-F59E-412C-A4ED-8C06CA7A5A45}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4CE65772-F59E-412C-A4ED-8C06CA7A5A45}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4CE65772-F59E-412C-A4ED-8C06CA7A5A45}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D772720F-779D-4F7B-AD99-2E583CD94F8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D772720F-779D-4F7B-AD99-2E583CD94F8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D772720F-779D-4F7B-AD99-2E583CD94F8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -55,7 +47,6 @@ Global
 		{0F6FE7A8-279F-4BFA-BA18-D27A27782EF3} = {0FC9FE2C-3B89-44FA-8456-4C9340E4FA7F}
 		{CDC91AC4-55AD-494F-AFE1-114E02F672D0} = {0CF0D8A0-C308-4887-B1A8-BB8057E00339}
 		{DB87851E-44B6-48A1-8615-BA7242AA37AF} = {CB9322E0-2ADB-4675-BCE7-E85F2B53F95F}
-		{4CE65772-F59E-412C-A4ED-8C06CA7A5A45} = {6758D40A-9CE3-4798-ACB4-7C8BBE298ABB}
 		{D772720F-779D-4F7B-AD99-2E583CD94F8B} = {CB9322E0-2ADB-4675-BCE7-E85F2B53F95F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
